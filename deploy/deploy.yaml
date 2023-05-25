@@ -4,7 +4,7 @@ metadata:
   name: mytest-role
 spec:
   providerConfigRef:
-  	name: aws-provider
+    name: aws-provider
   forProvider:
     assumeRolePolicy: |
       {
@@ -27,7 +27,7 @@ metadata:
   name: mytest-function
 spec:
   providerConfigRef:
-  	name: aws-provider
+    name: aws-provider
   forProvider:
     handler: index.js
     region: ap-southeast-2
