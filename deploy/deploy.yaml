@@ -1,11 +1,34 @@
-apiVersion: vultr.vultr.upbound.io/v1alpha1
-kind: Instance
+apiVersion: iam.aws.upbound.io/v1beta1
+kind: Role
 metadata:
-  name: my-instance
+  name: mytest-role
 spec:
   forProvider:
-    osId: 1968
-    plan: vc2-1c-1gb
-    region: syd
-  providerConfigRef:
-    name: vultr-provider
+    assumeRolePolicy: |
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Action": "sts:AssumeRole",
+            "Principal": {
+              "Service": "lambda.amazonaws.com"
+            },
+            "Effect": "Allow",
+            "Sid": ""
+          }
+        ]
+      }
+---
+apiVersion: lambda.aws.upbound.io/v1beta1
+kind: Function
+metadata:
+  name: mytest-function
+spec:
+  forProvider:
+    handler: index.js
+    region: ap-southeast-2
+    roleRef:
+      name: mytest-role
+    runtime: nodejs16.x
+    s3Bucket: mytest-bucket.flerwin.com
+    s3Key: data/output/mytest.zip
