@@ -29,7 +29,7 @@ spec:
   providerConfigRef:
     name: aws-provider
   forProvider:
-    handler: index.js
+    handler: index.handler
     region: ap-southeast-2
     roleRef:
       name: mytest-role
